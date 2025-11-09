@@ -1,4 +1,6 @@
 import React from "react";
+import clsx from "clsx";
+import CustomDatePicker from './CustomDatePicker'
 
 const InputField = ({
   label,
@@ -38,7 +40,7 @@ const InputField = ({
             value={value}
             placeholder={placeholder}
             className="textarea-field-input"
-            onchange={onChange}
+            onChange={onChange}
           />
         )}
       </div>
