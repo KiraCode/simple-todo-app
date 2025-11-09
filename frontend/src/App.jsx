@@ -1,12 +1,15 @@
-import React from 'react'
-import MainLayout from './components/MainLayout'
+import React from "react";
+import MainLayout from "./components/MainLayout";
+import TaskMain from "./components/TaskMain";
 
 const App = () => {
   return (
     <div>
-      <MainLayout/>
+      <MainLayout>
+        <TaskMain />
+      </MainLayout>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
