@@ -4,7 +4,7 @@ import TitleImg from "../assets/title-placeholder-img.svg";
 import Memo from "../assets/memo.svg";
 import InputField from "./ui/InputField";
 import Calendar from "../assets/calendar.svg";
-import createTaskAPI from "./api/CreateTask";
+import createTaskAPI from "./api/createTask";
 import clsx from "clsx";
 
 const CreateTask = ({
