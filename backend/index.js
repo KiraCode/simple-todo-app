@@ -5,7 +5,7 @@ import db from "./utils/db.js";
 import router from "./routes/taskRoutes.js";
 
 const app = express();
-const port = process.env.port || 8001;
+const port = process.env.PORT || 8001;
 
 app.use(cors());
 app.use(express.urlencoded({extended:true})); //parse the post request coming from request body
