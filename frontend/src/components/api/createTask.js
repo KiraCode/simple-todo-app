@@ -12,7 +12,7 @@ async function createTaskAPI(values, handleResponse, handleError, setLoading) {
       due_date: values.taskDueDate?.toString(),
     });
 
-    fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

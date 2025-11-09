@@ -9,8 +9,9 @@ import ViewTask from "./ViewTask";
 import fetchTaskApi from "../components/api/fetchtask.js";
 
 const TaskMain = () => {
-  const [currComponent, setCurrComponent] = useState("loading");
+  const [currComponent, setCurrComponent] = useState("createTask");
   const [tasks, setTasks] = useState([]);
+  const [activeTask, setActiveTask] = useState([]);
 
   const showNoTaskScreen = useCallback(function () {
     setCurrComponent("noTask");
@@ -18,7 +19,7 @@ const TaskMain = () => {
   const showCreateTaskScreen = useCallback(function () {
     setCurrComponent("createTask");
   }, []);
-  const showTaskListSCreen = useCallback(function () {
+  const showTaskListScreen = useCallback(function () {
     setCurrComponent("taskList");
   }, []);
   const showEditTaskScreen = useCallback(function () {
@@ -28,22 +29,19 @@ const TaskMain = () => {
     setCurrComponent("viewTask");
   }, []);
 
-  const handleResponse = useCallback(
-    function (responseData) {
-      console.log(responseData);
-      const extractedTasks = responseData.tasks;
-      setTasks(extractedTasks);
-      if (extractedTasks.length) {
-        showTaskListSCreen();
-      } else {
-        showNoTaskScreen();
-      }
-    },
-    [showTaskListSCreen, showNoTaskScreen]
-  );
-  const handleError = function (errorMsg) {
+  const handleResponse = useCallback(function (responseData) {
+    console.log(responseData);
+    const extractedTasks = responseData.tasks;
+    setTasks(extractedTasks);
+    if (extractedTasks.length) {
+      showTaskListScreen();
+    } else {
+      showNoTaskScreen();
+    }
+  }, []);
+  const handleError = useCallback(function (errorMsg) {
     console.log(errorMsg);
-  };
+  }, []);
   const fetchAllTasks = useCallback(
     function () {
       fetchTaskApi(handleResponse, handleError);
@@ -61,10 +59,44 @@ const TaskMain = () => {
         {currComponent === "noTask" && (
           <NoTask showCreateTaskScreen={showCreateTaskScreen} />
         )}
-        {currComponent === "taskList" && <TaskList />}
-        {currComponent == "createTask" && <CreateTask />}
-        {currComponent === "viewTask" && <ViewTask />}
-        {currComponent === "editTask" && <EditTask />}
+
+        {currComponent === "taskList" && (
+          <TaskList
+            tasks={tasks}
+            setActiveTask={setActiveTask}
+            fetchAllTasks={fetchAllTasks}
+            showCreateTaskScreen={showCreateTaskScreen}
+            showViewTaskScreen={showViewTaskScreen}
+            showEditTaskScreen={showEditTaskScreen}
+          />
+        )}
+
+        {currComponent === "createTask" && (
+          <CreateTask
+            fetchAllTasks={fetchAllTasks}
+            showTaskListScreen={showTaskListScreen}
+            showNoTaskScreen={showNoTaskScreen}
+            tasks={tasks}
+          />
+        )}
+
+        {currComponent === "viewTask" && (
+          <ViewTask
+            task={activeTask}
+            showTaskListScreen={showTaskListScreen}
+            fetchAllTasks={fetchAllTasks}
+            setActiveTask={setActiveTask}
+            showEditTaskScreen={showEditTaskScreen}
+          />
+        )}
+
+        {currComponent === "editTask" && (
+          <EditTask
+            showTaskListScreen={showTaskListScreen}
+            task={activeTask}
+            fetchAllTasks={fetchAllTasks}
+          />
+        )}
       </div>
     </>
   );

@@ -1,10 +1,10 @@
 import React from "react";
 let isOpen = true;
 
-const Modal = ({ isOpen, children }) => {
+const Modal = ({ isOpen,onClose, children }) => {
   return isOpen ? (
     <div>
-      <div className="overlay-style"></div>
+      <div className="overlay-style" onClick={onClose}></div>
       <div className="modal-style">{children}</div>
     </div>
   ) : null;
